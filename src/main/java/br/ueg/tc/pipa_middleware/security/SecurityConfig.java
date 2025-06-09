@@ -33,6 +33,8 @@ public class SecurityConfig {
                 authorizeRequests.requestMatchers(
                                 "/api/authenticate-student",
                                 "/api/organization/**",
+                                "/api/organization/institutions",
+                                "/api/organization/login-fields/",
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html")

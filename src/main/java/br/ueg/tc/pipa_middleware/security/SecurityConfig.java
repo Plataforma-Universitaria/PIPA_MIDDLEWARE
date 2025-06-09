@@ -33,6 +33,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        System.out.println("-----ENTRANDO NO FILTROI DO MIDDLEWARE-----");
         http.cors(Customizer.withDefaults()).authorizeHttpRequests(authorizeRequests ->
                 authorizeRequests.requestMatchers(
                                 "/api/authenticate-student",

@@ -36,23 +36,19 @@ public class SecurityConfig {
     @Order(1)
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         System.out.println("-----ENTRANDO NO FILTRO DO MIDDLEWARE-----");
-        http.cors(Customizer.withDefaults()).authorizeHttpRequests(authorizeRequests ->
-                authorizeRequests.requestMatchers(
-                                "/api/authenticate-student",
-                                "/api/organization/**",
-                                "/api/organization/institutions",
-                                "/api/organization/login-fields/",
-                                "/organization/add-institution",
-                                "/organization/**",
-                                "/v3/api-docs/**",
-                                "/swagger-ui/**",
-                                "/swagger-ui.html")
-                        .permitAll()
-                        .anyRequest().authenticated());
-        http.csrf(AbstractHttpConfigurer::disable)
+
+        http.cors(Customizer.withDefaults())
+                .authorizeHttpRequests(authorizeRequests ->
+                        authorizeRequests
+                                .requestMatchers("/api/intent").authenticated()
+                                .anyRequest().permitAll()
+                )
+                .csrf(AbstractHttpConfigurer::disable)
                 .oauth2ResourceServer(oauth2 ->
                         oauth2.jwt(jwtConfigurer ->
-                                jwtConfigurer.jwtAuthenticationConverter(jwtAuthenticationConverter())));
+                                jwtConfigurer.jwtAuthenticationConverter(jwtAuthenticationConverter())
+                        )
+                );
 
         return http.build();
     }
